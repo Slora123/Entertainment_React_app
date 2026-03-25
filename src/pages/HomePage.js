@@ -3,7 +3,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { addBooking } from '../redux/bookingActions';
 import Header from '../components/Header';
-import MovieList from '../components/MovieList';
 import MovieCard from '../components/MovieCard';
 
 function HomePage() {
