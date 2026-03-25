@@ -2,7 +2,6 @@
 
 import { useSelector, useDispatch } from 'react-redux';
 import { removeBooking, clearBookings } from '../redux/bookingActions';
-import { useSearchParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 function BookingsPage() {
@@ -12,10 +11,7 @@ function BookingsPage() {
   // REDUX - useDispatch: Get dispatch function to trigger Redux actions
   const dispatch = useDispatch();
 
-  // ROUTING - QUERY PARAMETERS: useSearchParams hook gets URL search params
-  // Example URL: /bookings?sort=price&filter=pending
-  // Query parameters are optional filters/settings passed in URL
-  // (supports future filtering; not currently used in display)
+
 
   // REDUX action: Remove booking at specific index
   function handleRemoveBooking(index) {
