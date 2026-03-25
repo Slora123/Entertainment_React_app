@@ -1,0 +1,123 @@
+Redux is an open-source JavaScript library for managing and centralizing the state of an application
+
+1. REACT COMPONENTS
+────────────────────────────────────────────────────────────────────────────
+WHAT: Reusable JavaScript functions that return JSX (HTML-like code)
+WHY: Build UIs from small, reusable pieces
+Components in project: App, Header, MovieCard, MovieList, BookingCart, 
+                       Navigation, HomePage, BookingsPage, MovieDetailPage
+
+2. PROPS (Properties)
+────────────────────────────────────────────────────────────────────────────
+WHAT: Data passed from parent to child component (READ-ONLY)
+SYNTAX: <MovieCard movie={movieObj} onBook={handleBook} />
+WHY: Share data between components, make components reusable
+
+PROPS IN PROJECT:
+├─ Header: receives totalTickets
+├─ MovieCard: receives movie, onBook
+├─ MovieList: receives movies, addBooking
+└─ BookingCart: receives bookings
+
+PROPS vs STATE:
+│ Props → Parent to Child (read-only) │ State → Component internal (mutable) │
+
+3. STATE (useState)
+────────────────────────────────────────────────────────────────────────────
+WHAT: Internal mutable data that component manages
+SYNTAX: const [value, setValue] = useState(initialValue)
+WHY: Track data that changes (clicks, inputs, counters, etc)
+ORIGINAL: const [bookings, setBookings] = useState([])
+NOW: Uses Redux instead (see section 4)
+
+4. REDUX - Centralized State Management
+────────────────────────────────────────────────────────────────────────────
+WHAT: Library for managing app-wide state in one place
+WHY: Share state across many components without prop drilling
+
+KEY CONCEPTS:
+├─ STORE: Central place holding all app state (src/redux/store.js)
+├─ ACTIONS: Objects describing what happened (src/redux/bookingActions.js)
+│  ├─ addBooking(movie)
+│  ├─ removeBooking(index)
+│  └─ clearBookings()
+├─ REDUCER: Pure function that calculates new state (src/redux/bookingReducer.js)
+│  └─ ADD_BOOKING → add to array
+│  └─ REMOVE_BOOKING → remove by index
+│  └─ CLEAR_BOOKINGS → empty array
+├─ DISPATCH: Send action to store (dispatch(addBooking(movie)))
+└─ SELECTOR: Access state from component (useSelector(state => state.bookings))
+
+REDUX FLOW: User clicks → dispatch(action) → reducer → store updates → 
+            components re-render → UI updates
+
+COMPONENTS USING REDUX:
+├─ HomePage: useSelector (get) + useDispatch (add booking)
+├─ BookingsPage: useSelector (get) + useDispatch (remove/clear)
+├─ MovieDetailPage: useDispatch (add booking)
+└─ Navigation: useSelector (show count)
+
+5. ROUTING - Multi-page Navigation
+────────────────────────────────────────────────────────────────────────────
+WHAT: Navigate between different pages/views WITHOUT page reload
+WHY: Fast, smooth single-page app experience with working browser history
+
+ROUTES IN PROJECT:
+├─ "/" → HomePage (all movies)
+├─ "/movie/:id" → MovieDetailPage (single movie)
+└─ "/bookings" → BookingsPage (my bookings)
+
+KEY COMPONENTS:
+├─ <BrowserRouter>: Wrapper enabling routing
+├─ <Routes>: Container for all routes
+├─ <Route path="/bookings" element={<BookingsPage />} />: Map URL to component
+└─ <Link to="/bookings">: Client-side navigation (no page reload)
+
+
+
+================================================================================
+QUICK REFERENCE - How Everything Works Together
+================================================================================
+
+1. USER CLICKS "BOOK MOVIE"
+   ↓
+2. dispatch(addBooking(movie)) is called
+   ↓
+3. Redux action reaches reducer
+   ↓
+4. Reducer adds movie to bookings in store
+   ↓
+5. All components subscribed to store re-render
+   ↓
+6. Navigation shows new booking count
+   ↓
+7. UI updates automatically
+
+DATA TYPES:
+COMPONENTS: App, Header, MovieCard, MovieList, BookingCart, Navigation, etc.
+PROPS: Passed down (read-only)
+STATE: Internal to component or global in Redux store
+REDUX: Centralized bookings state
+ROUTING: URLs trigger component rendering
+LINKS: Enable smooth page navigation
+
+================================================================================
+REDUX FILE STRUCTURE
+================================================================================
+
+src/redux/
+├── store.js
+│   └─ Creates Redux store
+│   └─ const store = createStore(bookingReducer);
+│
+├── bookingReducer.js
+│   └─ Handles state logic
+│   └─ ADD_BOOKING, REMOVE_BOOKING, CLEAR_BOOKINGS actions
+│
+└── bookingActions.js
+    └─ Action creators
+    └─ addBooking(), removeBooking(), clearBookings()
+
+
+
+SOLID
