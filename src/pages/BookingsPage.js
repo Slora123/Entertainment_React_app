@@ -15,7 +15,7 @@ function BookingsPage() {
   // ROUTING - QUERY PARAMETERS: useSearchParams hook gets URL search params
   // Example URL: /bookings?sort=price&filter=pending
   // Query parameters are optional filters/settings passed in URL
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const sortBy = searchParams.get('sort') || 'default'; // Get sort param
 
   // REDUX action: Remove booking at specific index
